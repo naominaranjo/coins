@@ -1,5 +1,25 @@
-// Code copied from geeks4geeks :p
+const canvas = document.querySelector('#canvas');
 
+// Context for the canvas for 2 dimensional operations
+const ctx = canvas.getContext('2d');
+
+let currFrame = 1;
+let frames = {};
+let frameSaves = document.getElementById("frameSaves");
+let saveBtn = document.getElementById("save");
+let clearBtn = document.getElementById("clear");
+let restoreBtn = document.getElementById("restore");
+let height = canvas.height;
+let width = canvas.width;
+let color; 
+let lineWidth;
+
+// Stores the initial position of the cursor
+let coord = { x: 0, y: 0 };
+
+// This is the flag that we are going to use to
+// trigger drawing
+let paint = false;
 
 // wait for the content of the window element
 // to load, then performs the operations.
@@ -10,33 +30,6 @@ window.addEventListener('load', () => {
     document.addEventListener('mouseup', stopPainting);
     document.addEventListener('mousemove', sketch);
 });
-
-const canvas = document.querySelector('#canvas');
-
-// Context for the canvas for 2 dimensional operations
-const ctx = canvas.getContext('2d');
-
-var currFrame = 0;
-var frames = {};
-var frameSaves = document.getElementById("frameSaves");
-var saveBtn = document.getElementById("save");
-var clearBtn = document.getElementById("clear");
-var restoreBtn = document.getElementById("restore");
-var height = canvas.height;
-var width = canvas.width;
-var color; 
-var lineWidth;
-saveBtn.addEventListener("click", saveDrawing, false);
-clearBtn.addEventListener("click", clear, false);
-restoreBtn.addEventListener("click", restore, false);
-
-
-// Stores the initial position of the cursor
-let coord = { x: 0, y: 0 };
-
-// This is the flag that we are going to use to
-// trigger drawing
-let paint = false;
 
 // Updates the coordianates of the cursor when
 // an event e is triggered to the coordinates where
@@ -89,26 +82,28 @@ function sketch(event) {
 }
 
 // restores the drawing using putImageData()
-var restore = function(i){
+let restore = function(i){
     console.log("restore attempted")
     ctx.putImageData(frames[i], 0, 0);
 }
 
-// stores drawing data in a global variable
+// stores drawing data in a global letiable
 function saveDrawing(e) {
     console.log("save attempted");
-    var reference = document.createElement("button");
+    let reference = document.createElement("button");
+    let data = ctx.getImageData(0, 0, width, height);
     reference.innerHTML = currFrame;
     reference.className = "button";
     // reference.width = 50;
     // reference.height = 50;
-    // var refCtx = reference.getContext("2d");
-
+    // let refCtx = reference.getContext("2d");
     currFrame++;
-    data = ctx.getImageData(0, 0, width, height);
+    
     // refCtx.putImageData(data, 0, 0);
     frames[currFrame] = data;
     console.log(frames);
+    const i = currFrame;
+    document.cookie = "currFrame=" + currFrame + ";" + " frames=" + frames + ";";
     reference.addEventListener("click", function () {
         restore(i);
     });
@@ -121,18 +116,18 @@ function clear(e) {
     ctx.clearRect(0, 0, width, height);
 }
 
-var e = document.getElementById("penColor");
+let e = document.getElementById("penColor");
 function penCol(){
-  // var as = document.forms[0].penColor.value;
-  var col = e.options[e.selectedIndex].text;
+  // let as = document.forms[0].penColor.value;
+  let col = e.options[e.selectedIndex].text;
   color = col;
   console.log(col);
 }
 e.onchange=penCol;
 penCol();
 
-var slider = document.getElementById("myRange");
-var output = document.getElementById("demo");
+let slider = document.getElementById("myRange");
+let output = document.getElementById("demo");
 output.innerHTML = slider.value; // Display the default slider value
 lineWidth = slider.value;
 console.log(lineWidth);
@@ -142,3 +137,7 @@ slider.oninput = function() {
   console.log(lineWidth);
   output.innerHTML = this.value;
 }
+
+saveBtn.addEventListener("click", saveDrawing, false);
+clearBtn.addEventListener("click", clear, false);
+restoreBtn.addEventListener("click", restore, false);
