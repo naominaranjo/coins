@@ -37,8 +37,8 @@ window.addEventListener('load', () => {
 // an event e is triggered to the coordinates where
 // the said event is triggered.
 function getPosition(event) {
-    coord.x = event.clientX - canvas.offsetLeft;
-    coord.y = event.clientY - canvas.offsetTop;
+    coord.x = event.offsetX;
+    coord.y = event.offsetY;
 }
 
 function changeColor(){
