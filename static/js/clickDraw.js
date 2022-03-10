@@ -3,7 +3,7 @@ const canvas = document.querySelector('#canvas');
 // Context for the canvas for 2 dimensional operations
 const ctx = canvas.getContext('2d');
 
-let currFrame = 1;
+let currFrame = 0;
 let frames = {};
 let frameSaves = document.getElementById("frameSaves");
 let saveBtn = document.getElementById("save");
@@ -90,20 +90,20 @@ let restore = function(i){
 // stores drawing data in a global letiable
 function saveDrawing(e) {
     console.log("save attempted");
+    currFrame++;
     let reference = document.createElement("button");
     let data = ctx.getImageData(0, 0, width, height);
-    reference.innerHTML = currFrame;
     reference.className = "button";
+    reference.innerHTML = currFrame;
     // reference.width = 50;
     // reference.height = 50;
-    // let refCtx = reference.getContext("2d");
-    currFrame++;
-    
+    // let refCtx = reference.getContext("2d");   
     // refCtx.putImageData(data, 0, 0);
     frames[currFrame] = data;
     console.log(frames);
     const i = currFrame;
-    document.cookie = "currFrame=" + currFrame + ";" + " frames=" + frames + ";";
+    document.cookie = "currFrame=" + currFrame + ";" + "path=/" + ";" + "sameSite=Strict";
+    document.cookie = "frames=" + frames + ";" + "path=/" + ";" + "sameSite=Strict";
     reference.addEventListener("click", function () {
         restore(i);
     });
