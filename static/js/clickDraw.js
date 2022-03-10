@@ -12,9 +12,10 @@ let restoreBtn = document.getElementById("restore");
 let height = canvas.height;
 let width = canvas.width;
 let color;
-let lineWidth;
+let penWidth;
 let col = document.getElementById("penColor");
 let slider = document.getElementById("penSize");
+let erase = false;
 // let output = document.getElementById("demo");
 // Stores the initial position of the cursor
 let coord = { x: 0, y: 0 };
@@ -37,8 +38,9 @@ window.addEventListener('load', () => {
 // an event e is triggered to the coordinates where
 // the said event is triggered.
 function getPosition(event) {
-    coord.x = event.offsetX;
-    coord.y = event.offsetY;
+  var rect = canvas.getBoundingClientRect();
+  coord.x = event.clientX - rect.left;
+  coord.y = event.clientY - rect.top;
 }
 
 function changeColor(){
@@ -57,30 +59,36 @@ function stopPainting() {
 function sketch(event) {
     if (!paint) return;
     ctx.beginPath();
+    if (!erase){
+      ctx.lineWidth = penWidth;
+      // Sets the end of the lines drawn
+      // to a round shape.
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = color;
+      // The cursor to start drawing
+      // moves to this coordinate
+      ctx.moveTo(coord.x, coord.y);
+      // The position of the cursor
+      // gets updated as we move the
+      // mouse around.
+      getPosition(event);
+      // A line is traced from start
+      // coordinate to this coordinate
+      ctx.lineTo(coord.x, coord.y);
+      // Draws the line.
+      ctx.stroke();
+    }
+    if (erase){
+      ctx.lineWidth = 10;
+      ctx.lineCap = "round";
+      ctx.strokeStyle = white;
+      ctx.moveTo(coord.x, coord.y);
+      getPosition(event);
+      ctx.lineTo(coord.x, coord.y);
+      ctx.stroke();
 
-    ctx.lineWidth = lineWidth;
+    }
 
-    // Sets the end of the lines drawn
-    // to a round shape.
-    ctx.lineCap = 'round';
-
-    ctx.strokeStyle = color;
-
-    // The cursor to start drawing
-    // moves to this coordinate
-    ctx.moveTo(coord.x, coord.y);
-
-    // The position of the cursor
-    // gets updated as we move the
-    // mouse around.
-    getPosition(event);
-
-    // A line is traced from start
-    // coordinate to this coordinate
-    ctx.lineTo(coord.x, coord.y);
-
-    // Draws the line.
-    ctx.stroke();
 }
 
 // restores the drawing using putImageData()
@@ -99,7 +107,7 @@ function saveDrawing(e) {
     reference.innerHTML = currFrame;
     // reference.width = 50;
     // reference.height = 50;
-    // let refCtx = reference.getContext("2d");   
+    // let refCtx = reference.getContext("2d");
     // refCtx.putImageData(data, 0, 0);
     frames[currFrame] = data;
     console.log(frames);
@@ -131,8 +139,8 @@ penCol();
 // output.innerHTML = slider.value; // Display the default slider value
 // Update the current slider value (each time you drag the slider handle) + change pen thickness
 slider.oninput = function() {
-  lineWidth = slider.value;
-  console.log(lineWidth);
+  penWidth = slider.value;
+  console.log(penWidth);
   output.innerHTML = this.value;
 }
 
