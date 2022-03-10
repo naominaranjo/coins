@@ -11,9 +11,11 @@ let clearBtn = document.getElementById("clear");
 let restoreBtn = document.getElementById("restore");
 let height = canvas.height;
 let width = canvas.width;
-let color; 
+let color;
 let lineWidth;
-
+let col = document.getElementById("penColor");
+let slider = document.getElementById("penSize");
+// let output = document.getElementById("demo");
 // Stores the initial position of the cursor
 let coord = { x: 0, y: 0 };
 
@@ -35,8 +37,8 @@ window.addEventListener('load', () => {
 // an event e is triggered to the coordinates where
 // the said event is triggered.
 function getPosition(event) {
-    coord.x = event.clientX - canvas.offsetLeft;
-    coord.y = event.clientY - canvas.offsetTop;
+    coord.x = event.offsetX;
+    coord.y = event.offsetY;
 }
 
 function changeColor(){
@@ -116,21 +118,17 @@ function clear(e) {
     ctx.clearRect(0, 0, width, height);
 }
 
-let e = document.getElementById("penColor");
+//changes the pen color according to user input
 function penCol(){
   // let as = document.forms[0].penColor.value;
-  let col = e.options[e.selectedIndex].text;
-  color = col;
+  color = col.options[col.selectedIndex].text;
   console.log(col);
 }
-e.onchange=penCol;
+col.onchange=penCol;
 penCol();
 
-let slider = document.getElementById("myRange");
-let output = document.getElementById("demo");
-output.innerHTML = slider.value; // Display the default slider value
-lineWidth = slider.value;
-console.log(lineWidth);
+//changes pen thickness according to user input
+// output.innerHTML = slider.value; // Display the default slider value
 // Update the current slider value (each time you drag the slider handle) + change pen thickness
 slider.oninput = function() {
   lineWidth = slider.value;
