@@ -9,12 +9,16 @@ let frameSaves = document.getElementById("frameSaves");
 let saveBtn = document.getElementById("save");
 let clearBtn = document.getElementById("clear");
 let restoreBtn = document.getElementById("restore");
+let eraserBtn = document.getElementById("eraser");
+let penBtn = document.getElementById("pen");
 let height = canvas.height;
 let width = canvas.width;
 let color;
 let penWidth;
+let eraserWidth;
 let col = document.getElementById("penColor");
-let slider = document.getElementById("penSize");
+let penSlider = document.getElementById("penSize");
+let eraserSlider = document.getElementById("eraserSize");
 let erase = false;
 // let output = document.getElementById("demo");
 // Stores the initial position of the cursor
@@ -79,9 +83,9 @@ function sketch(event) {
       ctx.stroke();
     }
     if (erase){
-      ctx.lineWidth = 10;
+      ctx.lineWidth = eraserWidth;
       ctx.lineCap = "round";
-      ctx.strokeStyle = white;
+      ctx.strokeStyle = "white";
       ctx.moveTo(coord.x, coord.y);
       getPosition(event);
       ctx.lineTo(coord.x, coord.y);
@@ -126,11 +130,22 @@ function clear(e) {
     ctx.clearRect(0, 0, width, height);
 }
 
+function penOn(){
+    paint = true;
+    erase = false;
+    console.log("draw");
+}
+
+function eraseOn(){
+    paint = false;
+    erase = true;
+    console.log("erase");
+}
 //changes the pen color according to user input
 function penCol(){
   // let as = document.forms[0].penColor.value;
   color = col.options[col.selectedIndex].text;
-  console.log(col);
+  console.log(color);
 }
 col.onchange=penCol;
 penCol();
@@ -138,12 +153,19 @@ penCol();
 //changes pen thickness according to user input
 // output.innerHTML = slider.value; // Display the default slider value
 // Update the current slider value (each time you drag the slider handle) + change pen thickness
-slider.oninput = function() {
-  penWidth = slider.value;
+penSlider.oninput = function() {
+  penWidth = penSlider.value;
   console.log(penWidth);
   output.innerHTML = this.value;
 }
 
+eraserSlider.oninput = function() {
+  eraserWidth = eraserSlider.value;
+  console.log(eraserWidth);
+  output.innerHTML = this.value;
+}
+penBtn.addEventListener("click", penOn);
+eraserBtn.addEventListener("click", eraseOn);
 saveBtn.addEventListener("click", saveDrawing, false);
 clearBtn.addEventListener("click", clear, false);
 restoreBtn.addEventListener("click", restore, false);
