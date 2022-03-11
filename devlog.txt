@@ -1,0 +1,17 @@
+Coins: Naomi Naranjo, Oscar Wang, Ishraq Mahid, Shriya Anand
+SoftDev
+P02
+__________________________________________________
+
+ShriyaA -- 2022-3-3 8:40
+- Explored different ways to implement a pen/brush
+- May use p5 library to make things easy
+
+ShriyaA -- 2022-3-4 8:36
+- Added buttons for different pen color
+- Worked on the js for changing the color on the canvas
+
+ShriyaA -- 2022-3-6 16:17
+- Finished the multicolor pen JS code
+- added slider for different pen sizes
+- finished code for the different pen sizes

@@ -16,13 +16,15 @@ const canvas = document.querySelector('#canvas');
 // Context for the canvas for 2 dimensional operations
 const ctx = canvas.getContext('2d');
 
-var frame;
+var currFrame = 0;
+var frames = {};
+var frameSaves = document.getElementById("frameSaves");
 var saveBtn = document.getElementById("save");
 var clearBtn = document.getElementById("clear");
 var restoreBtn = document.getElementById("restore");
 var height = canvas.height;
 var width = canvas.width;
-var color;
+var color; 
 var lineWidth;
 saveBtn.addEventListener("click", saveDrawing, false);
 clearBtn.addEventListener("click", clear, false);
@@ -86,23 +88,37 @@ function sketch(event) {
     ctx.stroke();
 }
 
+// restores the drawing using putImageData()
+var restore = function(i){
+    console.log("restore attempted")
+    ctx.putImageData(frames[i], 0, 0);
+}
+
 // stores drawing data in a global variable
 function saveDrawing(e) {
     console.log("save attempted");
+    var reference = document.createElement("button");
+    reference.innerHTML = currFrame;
+    reference.className = "button";
+    // reference.width = 50;
+    // reference.height = 50;
+    // var refCtx = reference.getContext("2d");
+
+    currFrame++;
     data = ctx.getImageData(0, 0, width, height);
-    frame = data;
+    // refCtx.putImageData(data, 0, 0);
+    frames[currFrame] = data;
+    console.log(frames);
+    reference.addEventListener("click", function () {
+        restore(i);
+    });
+    frameSaves.appendChild(reference);
 }
 
 // clears the canvas
 function clear(e) {
     console.log("clear attempted");
     ctx.clearRect(0, 0, width, height);
-}
-
-// restores the drawing using putImageData()
-function restore(e) {
-    console.log("restore attempted")
-    ctx.putImageData(frame, 0, 0);
 }
 
 var e = document.getElementById("penColor");

@@ -24,8 +24,15 @@ class Table:
         self.c.execute(f"INSERT INTO {self.table_name} VALUES {value_string}", values)
         self.db.commit()
     
-    def get_field(self,search_type,search_query,result_type):
-        self.c.execute(f"SELECT {result_type} FROM {self.table_name} WHERE {search_query} ")
+    def get_field(self,search_type):
+        self.c.execute(
+            f"SELECT {search_type} FROM {self.table_name}")
+        
+        value_lists = self.c.fetchall()
+        return map(first, value_lists)
+
+    
+
     def set_value(self, search, field, value):
         "sets field of a row with a search_field of search to value"
         self.c.execute(f"UPDATE {self.table_name} SET {field} = ? WHERE {self.search_field} = ?", [value, search])
@@ -52,10 +59,11 @@ class Table:
 
         return match_value == value
 
-    def value_exists(self, search):
+    def value_exists(self, search, search_field):
         "returns true if a row where search_field equals search exists"
-        value_list = self.get_value_list(search, "1")
-        return bool(value_list)
+        return search in self.get_field(search_field)
+        #value_list = self.get_value_list(search, "1")
+        #return bool(value_list)
     
     def create(self, field_names):
         "creates a table with field_names"
