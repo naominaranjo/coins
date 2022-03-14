@@ -34,6 +34,9 @@ def add_user(username, password):
     "adds a user with username and passsowrd"
 
     x = randint(0,1000)
+    while(userID_exists(str(x))):
+        x = randint(0, 1000)
+
     # while x in user_ID_list:
     #     x = randint(0, 1000)
 
@@ -41,8 +44,34 @@ def add_user(username, password):
     users.add_values([x, username, password])
 
 
+def getBookIDs():
+    return flip_book.get_main_values()
+
+def getBookNameByID(bookID):
+    return flip_book.get_value(bookID, "bookTitle")
+
+def getBook(bookID):
+    return flip_book.get_value_list(bookID,"bookTitle")
+
+def bookID_exists(bookID):
+    return flip_book.value_exists(bookID, "bookID")
+
+def add_book(title,image_collection,userID):
+    "creates a book with the parameters"
+    x = randint(0,1000)
+
+    while(bookID_exists(str(x))):
+        x = randint(0, 1000)
+
+    flip_book.add_values([title,x,image_collection,userID])
+
 def reset_data():
     "resets the database to empty user and story tables"
     open("data.db", "w").close()
+<<<<<<< HEAD
     users.create(["userID", "username", "password"])
     flip_book.create(["bookTitle","bookID","images","userID"])
+=======
+    users.create(["userID", "username", "password" ])
+    flip_book.create(["bookID", "bookTitle", "images", "userID"])
+>>>>>>> 75dc07edf3c173b1555c53d2f350f0e03483ec4d
