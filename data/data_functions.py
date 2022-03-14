@@ -44,5 +44,5 @@ def add_user(username, password):
 def reset_data():
     "resets the database to empty user and story tables"
     open("data.db", "w").close()
-    users.create(["userID", "username", "password" ])
+    users.create(["userID", "username", "password"])
     flip_book.create(["bookTitle","bookID","images","userID"])
