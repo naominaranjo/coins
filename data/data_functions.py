@@ -68,10 +68,5 @@ def add_book(title,image_collection,userID):
 def reset_data():
     "resets the database to empty user and story tables"
     open("data.db", "w").close()
-<<<<<<< HEAD
-    users.create(["userID", "username", "password"])
-    flip_book.create(["bookTitle","bookID","images","userID"])
-=======
     users.create(["userID", "username", "password" ])
     flip_book.create(["bookID", "bookTitle", "images", "userID"])
->>>>>>> 75dc07edf3c173b1555c53d2f350f0e03483ec4d

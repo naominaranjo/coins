@@ -22,7 +22,7 @@ def index():
 
     else:
 
-        return render_template("homepage.html")
+        return render_template("beep.html")
 
 
 @app.route("/register", methods=["GET", "POST"])
