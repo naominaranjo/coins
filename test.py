@@ -23,3 +23,15 @@ for x in get_userIDs():
     print(x)
     print(userID_exists(x))
     print(getUsernameByID(x))
+
+
+add_book("aaaaaa","[aaaa]","111")
+add_book("aaaadasdwad", "[aadsdsaaa]", "1131")
+add_book("avvvvvs", "[aasvsvsaaa]", "11121")
+
+for x in getBookIDs():
+    print(x)
+    print(bookID_exists(x))
+    print(getBookNameByID(x))
+    print(getBook(x))
+
