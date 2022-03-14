@@ -71,3 +71,8 @@ class Table:
         field_string = list_to_string(fields)
         self.c.execute(f"CREATE TABLE IF NOT EXISTS {self.table_name} {field_string}")
         self.db.commit()
+
+    def get_non_main_value(self,search_type,search_query,value):
+        ""
+        self.c.execute(f"SELECT {value} FROM {self.table_name} WHERE {search_type} = '{search_query}'")
+        return self.c.fetchone()

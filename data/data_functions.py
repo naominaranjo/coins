@@ -25,9 +25,12 @@ def userID_exists(userID):
 def getUsernameByID(userID):
     return users.get_value(userID,"username")
 
+def getIDbyUsername(username):
+    return users.get_non_main_value("username",username,"userID")[0]
+
 def correct_password(username, password):
     "returns true if username matches password"
-    real_password = users.get_value(username, "password")
+    real_password = users.get_value(getIDbyUsername(username), "password")
     return password == real_password
 
 def add_user(username, password):
