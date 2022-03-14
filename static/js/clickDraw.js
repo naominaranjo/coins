@@ -9,12 +9,17 @@ let frameSaves = document.getElementById("frameSaves");
 let saveBtn = document.getElementById("save");
 let clearBtn = document.getElementById("clear");
 let restoreBtn = document.getElementById("restore");
+let eraserBtn = document.getElementById("eraser");
+let penBtn = document.getElementById("pen");
 let height = canvas.height;
 let width = canvas.width;
 let color;
-let lineWidth;
+let penWidth;
+let eraserWidth;
 let col = document.getElementById("penColor");
-let slider = document.getElementById("penSize");
+let penSlider = document.getElementById("penSize");
+let eraserSlider = document.getElementById("eraserSize");
+let erase = false;
 // let output = document.getElementById("demo");
 // Stores the initial position of the cursor
 let coord = { x: 0, y: 0 };
@@ -37,8 +42,9 @@ window.addEventListener('load', () => {
 // an event e is triggered to the coordinates where
 // the said event is triggered.
 function getPosition(event) {
-    coord.x = event.offsetX;
-    coord.y = event.offsetY;
+  var rect = canvas.getBoundingClientRect();
+  coord.x = event.clientX - rect.left;
+  coord.y = event.clientY - rect.top;
 }
 
 function changeColor(){
@@ -57,30 +63,36 @@ function stopPainting() {
 function sketch(event) {
     if (!paint) return;
     ctx.beginPath();
+    if (!erase){
+      ctx.lineWidth = penWidth;
+      // Sets the end of the lines drawn
+      // to a round shape.
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = color;
+      // The cursor to start drawing
+      // moves to this coordinate
+      ctx.moveTo(coord.x, coord.y);
+      // The position of the cursor
+      // gets updated as we move the
+      // mouse around.
+      getPosition(event);
+      // A line is traced from start
+      // coordinate to this coordinate
+      ctx.lineTo(coord.x, coord.y);
+      // Draws the line.
+      ctx.stroke();
+    }
+    if (erase){
+      ctx.lineWidth = eraserWidth;
+      ctx.lineCap = "round";
+      ctx.strokeStyle = "white";
+      ctx.moveTo(coord.x, coord.y);
+      getPosition(event);
+      ctx.lineTo(coord.x, coord.y);
+      ctx.stroke();
 
-    ctx.lineWidth = lineWidth;
+    }
 
-    // Sets the end of the lines drawn
-    // to a round shape.
-    ctx.lineCap = 'round';
-
-    ctx.strokeStyle = color;
-
-    // The cursor to start drawing
-    // moves to this coordinate
-    ctx.moveTo(coord.x, coord.y);
-
-    // The position of the cursor
-    // gets updated as we move the
-    // mouse around.
-    getPosition(event);
-
-    // A line is traced from start
-    // coordinate to this coordinate
-    ctx.lineTo(coord.x, coord.y);
-
-    // Draws the line.
-    ctx.stroke();
 }
 
 // restores the drawing using putImageData()
@@ -99,7 +111,7 @@ function saveDrawing(e) {
     reference.innerHTML = currFrame;
     // reference.width = 50;
     // reference.height = 50;
-    // let refCtx = reference.getContext("2d");   
+    // let refCtx = reference.getContext("2d");
     // refCtx.putImageData(data, 0, 0);
     frames[currFrame] = data;
     console.log(frames);
@@ -118,11 +130,22 @@ function clear(e) {
     ctx.clearRect(0, 0, width, height);
 }
 
+function penOn(){
+    paint = true;
+    erase = false;
+    console.log("draw");
+}
+
+function eraseOn(){
+    paint = false;
+    erase = true;
+    console.log("erase");
+}
 //changes the pen color according to user input
 function penCol(){
   // let as = document.forms[0].penColor.value;
   color = col.options[col.selectedIndex].text;
-  console.log(col);
+  console.log(color);
 }
 col.onchange=penCol;
 penCol();
@@ -130,12 +153,19 @@ penCol();
 //changes pen thickness according to user input
 // output.innerHTML = slider.value; // Display the default slider value
 // Update the current slider value (each time you drag the slider handle) + change pen thickness
-slider.oninput = function() {
-  lineWidth = slider.value;
-  console.log(lineWidth);
+penSlider.oninput = function() {
+  penWidth = penSlider.value;
+  console.log(penWidth);
   output.innerHTML = this.value;
 }
 
+eraserSlider.oninput = function() {
+  eraserWidth = eraserSlider.value;
+  console.log(eraserWidth);
+  output.innerHTML = this.value;
+}
+penBtn.addEventListener("click", penOn);
+eraserBtn.addEventListener("click", eraseOn);
 saveBtn.addEventListener("click", saveDrawing, false);
 clearBtn.addEventListener("click", clear, false);
 restoreBtn.addEventListener("click", restore, false);

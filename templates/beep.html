@@ -11,33 +11,41 @@
   </head>
   <body>
     <div class="grid-x grid-padding-x">
+
       <div class="large-6 cell">
         <div><canvas id="canvas" width="600" height="600"></canvas></div>
       </div>
+
       <div class="large-6 cell">
-        <form class="float-right">
-          <select id="penColor">
-            <option value="1" selected="selected">black</option>
-            <option value="2">red</option>
-            <option value="3">orange</option>
-            <option value="4">yellow</option>
-            <option value="5">green</option>
-            <option value="6">blue</option>
-            <option value="7">indigo</option>
-          </select>
-        </form>
 
         <div class="float-right">
           <div class="slidecontainer">
             <input type="range" min="1" max="10" value="5" class="slider" id="penSize">
-            <p>Value: <span id="demo"></span></p>
           </div>
+
+          <form class="float-right">
+            <select id="penColor">
+              <option value="1" selected="selected">black</option>
+              <option value="2">red</option>
+              <option value="3">orange</option>
+              <option value="4">yellow</option>
+              <option value="5">green</option>
+              <option value="6">blue</option>
+              <option value="7">indigo</option>
+            </select>
+          </form>
+
+          <div><button class="button" id="pen"> Pen </button>
+
+            <div class="slidecontainer">
+              <input type="range" min="1" max="40" value="20" class="slider" id="eraserSize">
+            </div>
+
+          <div><button class="button" id="eraser"> Eraser </button>
 
           <div><button class="button" id="clear">Clear Drawing</button></div>
           <div><button class="button" id="save">Save Drawing</button></div>
           <div><button class="button" id="restore">Restore Drawing</button></div>
-          <div><button class="button" id="next">-></button></div>
-          <div><button class="button" id="prev"><-</button></div>
         </div>
       </div>
     </div>
