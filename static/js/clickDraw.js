@@ -131,7 +131,6 @@ function clear(e) {
 }
 
 function penOn(){
-    paint = true;
     erase = false;
     console.log("draw");
 }
@@ -156,13 +155,11 @@ penCol();
 penSlider.oninput = function() {
   penWidth = penSlider.value;
   console.log(penWidth);
-  output.innerHTML = this.value;
 }
 
 eraserSlider.oninput = function() {
   eraserWidth = eraserSlider.value;
   console.log(eraserWidth);
-  output.innerHTML = this.value;
 }
 penBtn.addEventListener("click", penOn);
 eraserBtn.addEventListener("click", eraseOn);
