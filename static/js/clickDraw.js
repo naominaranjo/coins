@@ -11,6 +11,8 @@ let clearBtn = document.getElementById("clear");
 let restoreBtn = document.getElementById("restore");
 let eraserBtn = document.getElementById("eraser");
 let penBtn = document.getElementById("pen");
+let next = document.getElementById("next");
+let prev = document.getElementById("prev");
 let height = canvas.height;
 let width = canvas.width;
 let color;
