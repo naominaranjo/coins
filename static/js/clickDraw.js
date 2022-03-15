@@ -26,6 +26,7 @@ let coord = { x: 0, y: 0 };
 
 // This is the flag that we are going to use to
 // trigger drawing
+let mode = "paint";
 let paint = false;
 
 // wait for the content of the window element
@@ -53,17 +54,24 @@ function changeColor(){
 // The following functions toggle the flag to start
 // and stop drawing
 function startPainting(event) {
+    if(mode == "paint"){
     paint = true;
     getPosition(event);
+    initialize = false;
+    }
+    if (mode == "erase"){
+      erase = true;
+      getPosition(event);
+    }
 }
 function stopPainting() {
+    erase = false;
     paint = false;
 }
 
 function sketch(event) {
-    if (!paint) return;
     ctx.beginPath();
-    if (!erase){
+    if (paint){
       ctx.lineWidth = penWidth;
       // Sets the end of the lines drawn
       // to a round shape.
@@ -131,13 +139,14 @@ function clear(e) {
 }
 
 function penOn(){
+    mode = "paint";
     erase = false;
     console.log("draw");
 }
 
 function eraseOn(){
+    mode = "erase";
     paint = false;
-    erase = true;
     console.log("erase");
 }
 //changes the pen color according to user input
