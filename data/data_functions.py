@@ -67,7 +67,7 @@ def add_book(title,image_collection,username):
         x = randint(0, 1000)
 
     flip_book.add_values([x, title, image_collection, username])
-    set_book_drawings_byID(x,"[]")
+    set_book_drawings_byID(x,image_collection)
 
 def match_book_owner(username,bookID):
     book_owner = flip_book.get_non_main_value("bookID",bookID,"username")[0]
