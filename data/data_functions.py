@@ -59,14 +59,37 @@ def getBook(bookID):
 def bookID_exists(bookID):
     return flip_book.value_exists(bookID, "bookID")
 
-def add_book(title,image_collection,userID):
+def add_book(title,image_collection,username):
     "creates a book with the parameters"
     x = randint(0,1000)
 
     while(bookID_exists(str(x))):
         x = randint(0, 1000)
 
-    flip_book.add_values([title,x,image_collection,userID])
+    flip_book.add_values([x, title, image_collection, username])
+    set_book_drawings_byID(x,image_collection)
+
+def match_book_owner(username,bookID):
+    book_owner = flip_book.get_non_main_value("bookID",bookID,"username")[0]
+    return book_owner == username
+
+def match_book_owner_by_title(username,title):
+    return match_book_owner(username,get_bookID_by_title(title))
+
+
+def get_bookID_by_title(title):
+    return flip_book.get_non_main_value("bookTitle",title,"bookID")[0]
+
+def get_book_drawings(title):
+    return flip_book.get_non_main_value("bookTitle", title, "images")[0]
+
+
+def set_book_drawings_byID(id, image_json):
+    flip_book.set_value(id,"images",image_json)
+
+
+def set_book_drawings_byTitle(title,image_json):
+    set_book_drawings_byID(get_bookID_by_title(title),image_json)
 
 def reset_data():
     "resets the database to empty user and story tables"

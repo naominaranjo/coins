@@ -90,8 +90,11 @@ def logout():
         del session["username"]
     return redirect(url_for("index"))
 
-
+@app.route("/submissions")
+def test():
+    return render_template("submissions.html")
 
 if __name__ == "__main__":  # true if this file NOT imported
     app.debug = True        # enable auto-reload upon code change
     app.run()
+
