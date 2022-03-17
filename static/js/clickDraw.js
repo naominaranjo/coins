@@ -11,6 +11,7 @@ let clearBtn = document.getElementById("clear");
 let restoreBtn = document.getElementById("restore");
 let eraserBtn = document.getElementById("eraser");
 let penBtn = document.getElementById("pen");
+let rectBtn = document.getElementById("rect");
 let next = document.getElementById("next");
 let prev = document.getElementById("prev");
 let height = canvas.height;
@@ -22,6 +23,7 @@ let col = document.getElementById("penColor");
 let penSlider = document.getElementById("penSize");
 let eraserSlider = document.getElementById("eraserSize");
 let erase = false;
+
 // let output = document.getElementById("demo");
 // Stores the initial position of the cursor
 let coord = { x: 0, y: 0 };
@@ -36,8 +38,8 @@ let paint = false;
 // This is considered best practice.
 window.addEventListener('load', () => {
 
-    document.addEventListener('mousedown', startPainting);
-    document.addEventListener('mouseup', stopPainting);
+    document.addEventListener('mousedown', mouseDown);
+    document.addEventListener('mouseup', mouseUp);
     document.addEventListener('mousemove', sketch);
 });
 
@@ -50,12 +52,9 @@ function getPosition(event) {
   coord.y = event.clientY - rect.top;
 }
 
-function changeColor(){
-  color
-}
 // The following functions toggle the flag to start
 // and stop drawing
-function startPainting(event) {
+function mouseDown(event) {
     if(mode == "paint"){
     paint = true;
     getPosition(event);
@@ -65,8 +64,12 @@ function startPainting(event) {
       erase = true;
       getPosition(event);
     }
+    if (mode == "rect"){
+      getPosition(event);
+      console.log("mode correct - rect");
+    }
 }
-function stopPainting() {
+function mouseUp() {
     erase = false;
     paint = false;
 }
@@ -100,7 +103,20 @@ function sketch(event) {
       getPosition(event);
       ctx.lineTo(coord.x, coord.y);
       ctx.stroke();
+    }
 
+    if (mode == "rect"){
+      ctx.beginPath();
+      ctx.lineWidth = eraserWidth;
+      ctx.lineCap = "round";
+      ctx.strokeStyle = "black";
+      ctx.rect(coord.x, coord.y, coord.x + 50, coord.y + 50);
+      ctx.stroke();
+
+      // ctx.moveTo(coord.x, coord.y);
+      // getPosition(event);
+      // ctx.lineTo(coord.x, coord.y);
+      // ctx.stroke();
     }
 
 }
@@ -151,12 +167,21 @@ function eraseOn(){
     paint = false;
     console.log("erase");
 }
+
+function rectOn(){
+    mode = "rect";
+    console.log("rect")
+}
+
+
 //changes the pen color according to user input
 function penCol(){
   // let as = document.forms[0].penColor.value;
   color = col.options[col.selectedIndex].text;
   console.log(color);
 }
+
+
 col.onchange=penCol;
 penCol();
 
@@ -172,6 +197,7 @@ eraserSlider.oninput = function() {
   eraserWidth = eraserSlider.value;
   console.log(eraserWidth);
 }
+rectBtn.addEventListener("click", rectOn);
 penBtn.addEventListener("click", penOn);
 eraserBtn.addEventListener("click", eraseOn);
 saveBtn.addEventListener("click", saveDrawing, false);
