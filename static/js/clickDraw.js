@@ -1,11 +1,25 @@
+// initialize canvas variables
 const canvas = document.querySelector('#canvas');
-
-// Context for the canvas for 2 dimensional operations
 const ctx = canvas.getContext('2d');
+let height = canvas.height;
+let width = canvas.width;
 
+// keeps track of frame and image data
 let currFrame = 0;
+let loadedFrame = 0;
 let frames = {};
-let frameSaves = document.getElementById("frameSaves");
+
+// drawing variables
+let color;
+let penWidth;
+let eraserWidth;
+let erase = false;
+// This is the flag that we are going to use to
+// trigger drawing
+let mode = "paint";
+let paint = false;
+
+// HTML references
 let saveBtn = document.getElementById("save");
 let clearBtn = document.getElementById("clear");
 let restoreBtn = document.getElementById("restore");
@@ -14,28 +28,16 @@ let penBtn = document.getElementById("pen");
 let rectBtn = document.getElementById("rect");
 let next = document.getElementById("next");
 let prev = document.getElementById("prev");
-let height = canvas.height;
-let width = canvas.width;
-let color;
-let penWidth;
-let eraserWidth;
 let col = document.getElementById("penColor");
 let penSlider = document.getElementById("penSize");
 let eraserSlider = document.getElementById("eraserSize");
-let erase = false;
+let frameSaves = document.getElementById("frameSaves");
 
-// let output = document.getElementById("demo");
 // Stores the initial position of the cursor
 let coord = { x: 0, y: 0 };
 
-// This is the flag that we are going to use to
-// trigger drawing
-let mode = "paint";
-let paint = false;
-
 // wait for the content of the window element
 // to load, then performs the operations.
-// This is considered best practice.
 window.addEventListener('load', () => {
 
     document.addEventListener('mousedown', mouseDown);
@@ -121,12 +123,6 @@ function sketch(event) {
 
 }
 
-// restores the drawing using putImageData()
-let restore = function(i){
-    console.log("restore attempted")
-    ctx.putImageData(frames[i], 0, 0);
-}
-
 // stores drawing data in a global letiable
 function saveDrawing(e) {
     console.log("save attempted");
@@ -150,6 +146,12 @@ function saveDrawing(e) {
     frameSaves.appendChild(reference);
 }
 
+// restores the drawing using putImageData()
+let restore = function(i){
+  console.log("restore attempted")
+  ctx.putImageData(frames[i], 0, 0);
+}
+  
 // clears the canvas
 function clear(e) {
     console.log("clear attempted");
@@ -172,7 +174,6 @@ function rectOn(){
     mode = "rect";
     console.log("rect")
 }
-
 
 //changes the pen color according to user input
 function penCol(){
@@ -197,6 +198,7 @@ eraserSlider.oninput = function() {
   eraserWidth = eraserSlider.value;
   console.log(eraserWidth);
 }
+
 rectBtn.addEventListener("click", rectOn);
 penBtn.addEventListener("click", penOn);
 eraserBtn.addEventListener("click", eraseOn);
