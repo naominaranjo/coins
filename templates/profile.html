@@ -1,0 +1,43 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>coins</title>
+
+    <!-- Compressed CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.7.4/dist/css/foundation.min.css" crossorigin="anonymous">
+
+</head>
+
+<body>
+
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <ul class="dropdown menu" data-dropdown-menu>
+                <li class="menu-text">coins</li>
+                <li>
+                    <a href="{{ url_for('index') }}">Home</a>
+                </li>
+                <li>
+                    <a href="{{ url_for('beep') }}">Create a GIF!</a>
+                </li>
+            </ul>
+        </div>
+        <div class="top-bar-right">
+
+            <ul class="dropdown menu" data-dropdown-menu>
+                {%if user %}
+                <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+                {%else%}
+                <li><a href="{{ url_for('register') }}">Register</a></li>
+                <li><a href="{{ url_for('login') }}">Log In</a></li>
+                {%endif%}
+            </ul>
+
+        </div>
+    </div>
+
+    <!-- Compressed JavaScript -->
+</body>
+
+</html>

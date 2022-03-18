@@ -18,12 +18,18 @@ def signed_in(session):
 def index():
     if session.get('username') is not None:
         user = session['username']
-        return render_template("beep.html", user=user)
+        return render_template("profile.html", user=user)
 
     else:
 
         return render_template("homepage.html")
 
+@app.route("/beep", methods = ["GET","POST"])
+def beep():
+    return render_template("beep.html")
+
+
+# @app.route("/history")
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
