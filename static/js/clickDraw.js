@@ -4,8 +4,10 @@ const canvas = document.querySelector('#canvas');
 const ctx = canvas.getContext('2d');
 
 let currFrame = 0;
+let loadedFrame = 0;
 let frames = {};
 let frameSaves = document.getElementById("frameSaves");
+
 let saveBtn = document.getElementById("save");
 let clearBtn = document.getElementById("clear");
 let restoreBtn = document.getElementById("restore");
@@ -14,14 +16,15 @@ let penBtn = document.getElementById("pen");
 let rectBtn = document.getElementById("rect");
 let next = document.getElementById("next");
 let prev = document.getElementById("prev");
+let col = document.getElementById("penColor");
+let penSlider = document.getElementById("penSize");
+let eraserSlider = document.getElementById("eraserSize");
+
 let height = canvas.height;
 let width = canvas.width;
 let color;
 let penWidth;
 let eraserWidth;
-let col = document.getElementById("penColor");
-let penSlider = document.getElementById("penSize");
-let eraserSlider = document.getElementById("eraserSize");
 let erase = false;
 
 // let output = document.getElementById("demo");
@@ -149,7 +152,7 @@ function saveDrawing(e) {
     });
     frameSaves.appendChild(reference);
 }
-
+  
 // clears the canvas
 function clear(e) {
     console.log("clear attempted");
@@ -172,7 +175,6 @@ function rectOn(){
     mode = "rect";
     console.log("rect")
 }
-
 
 //changes the pen color according to user input
 function penCol(){
