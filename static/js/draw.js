@@ -40,6 +40,11 @@ function mouseDown(event) {
     erase = true;
     getPosition(event);
     }
+    if (mode == "rect"){
+      if(corner1){
+
+      }
+    }
 }
 
 function mouseClick(){
