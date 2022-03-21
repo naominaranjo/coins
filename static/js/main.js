@@ -1,5 +1,5 @@
 import {saveDrawing, restore} from "./loadFrames.js";
-import {getPosition, mouseDown, mouseUp, sketch, clear, penOn, eraseOn, rectOn, penCol} from "./draw.js";
+import {getPosition, mouseDown, mouseUp, sketch, clear, penOn, eraseOn, rectOn, penCol, mouseClick} from "./draw.js";
 
 // initialize canvas variables
 const canvas = document.querySelector('#canvas');
@@ -18,6 +18,7 @@ let mode = "paint";
 let paint = false;
 
 // HTML references
+let canvasSpace =  document.getElementById("canvas");
 let saveBtn = document.getElementById("save");
 let clearBtn = document.getElementById("clear");
 let restoreBtn = document.getElementById("restore");
@@ -38,6 +39,7 @@ window.addEventListener('load', () => {
     document.addEventListener('mousedown', mouseDown);
     document.addEventListener('mouseup', mouseUp);
     document.addEventListener('mousemove', sketch);
+
 });
 
 col.onchange=penCol;
@@ -56,6 +58,7 @@ eraserSlider.oninput = function() {
   console.log(eraserWidth);
 }
 
+canvasSpace.addEventListener("click", mouseClick);
 rectBtn.addEventListener("click", rectOn);
 penBtn.addEventListener("click", penOn);
 eraserBtn.addEventListener("click", eraseOn);
