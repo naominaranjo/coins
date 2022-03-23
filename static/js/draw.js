@@ -11,13 +11,16 @@ let erase = false;
 let initialize = false;
 let corner1 = true;
 let rectDone = false;
+let data;
 let x1, x2, y1, y2;
+let requestID;
 // This is the flag that we are going to use to
 // trigger drawing
 let mode = "paint";
 let paint = false;
 
 let col = document.getElementById("penColor");
+let penSlider = document.getElementById("penSize");
 
 // Stores the initial position of the cursor
 let coord = { x: 0, y: 0 };
@@ -40,19 +43,33 @@ function mouseDown(event) {
     erase = true;
     getPosition(event);
     }
-    if (mode == "rect"){
-      if(corner1){
 
-      }
+}
+
+
+function drawRect(event){
+    if(mode == "rect" && !corner1){
+      clear();
+      ctx.putImageData(data, 0, 0);
+      ctx.beginPath();
+      getPosition(event);
+      let a = coord.x;
+      let b = coord.y;
+      console.log(b);
+      ctx.rect(x1,y1,a-x1,b-y1);
+      ctx.stroke();
+      console.log('animate');
+      // window.cancelAnimationFrame(requestID);
     }
+
 }
 
 function mouseClick(){
     if (mode == "rect"){
       ctx.beginPath();
-      ctx.lineWidth = 5;
+      ctx.lineWidth = penWidth;
       ctx.lineCap = "round";
-      ctx.strokeStyle = "black";
+      ctx.strokeStyle = color;
       if (!corner1){
         getPosition(event);
         x2 = coord.x;
@@ -68,7 +85,9 @@ function mouseClick(){
         x1 = coord.x;
         y1 = coord.y;
         corner1 = false;
+        data = ctx.getImageData(0, 0, width, height);
         console.log("cor1");
+
         return;
       }
 
@@ -102,13 +121,16 @@ function sketch(event) {
     ctx.stroke();
     }
     if (erase){
-    ctx.lineWidth = eraserWidth;
+    ctx.lineWidth = penWidth;
     ctx.lineCap = "round";
     ctx.strokeStyle = "white";
     ctx.moveTo(coord.x, coord.y);
     getPosition(event);
     ctx.lineTo(coord.x, coord.y);
     ctx.stroke();
+    }
+    if (mode == "rect"){
+      drawRect(event);
     }
 
 }
@@ -135,6 +157,8 @@ function eraseOn(){
 
 function rectOn(){
     mode = "rect";
+    requestID = window.requestAnimationFrame(drawRect);
+
     console.log("rect")
 }
 
@@ -145,4 +169,9 @@ function penCol(){
     console.log(color);
 }
 
-export { getPosition, mouseDown, mouseUp, sketch, clear, penOn, eraseOn, rectOn, penCol, mouseClick };
+penSlider.oninput = function() {
+  penWidth = penSlider.value;
+  console.log(penWidth);
+}
+
+export { getPosition, mouseDown, mouseUp, sketch, clear, penOn, eraseOn, rectOn, penCol, mouseClick, drawRect};

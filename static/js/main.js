@@ -1,5 +1,5 @@
 import {saveDrawing, restore} from "./loadFrames.js";
-import {getPosition, mouseDown, mouseUp, sketch, clear, penOn, eraseOn, rectOn, penCol, mouseClick} from "./draw.js";
+import {getPosition, mouseDown, mouseUp, sketch, clear, penOn, eraseOn, rectOn, penCol, mouseClick, drawRect} from "./draw.js";
 
 // initialize canvas variables
 const canvas = document.querySelector('#canvas');
@@ -9,8 +9,6 @@ let width = canvas.width;
 
 // drawing variables
 let color;
-let penWidth;
-let eraserWidth;
 let erase = false;
 // This is the flag that we are going to use to
 // trigger drawing
@@ -45,18 +43,6 @@ window.addEventListener('load', () => {
 col.onchange=penCol;
 penCol();
 
-//changes pen thickness according to user input
-// output.innerHTML = slider.value; // Display the default slider value
-// Update the current slider value (each time you drag the slider handle) + change pen thickness
-penSlider.oninput = function() {
-  penWidth = penSlider.value;
-  console.log(penWidth);
-}
-
-eraserSlider.oninput = function() {
-  eraserWidth = eraserSlider.value;
-  console.log(eraserWidth);
-}
 
 canvasSpace.addEventListener("click", mouseClick);
 rectBtn.addEventListener("click", rectOn);
