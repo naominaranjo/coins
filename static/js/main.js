@@ -1,4 +1,4 @@
-import {saveDrawing, restore} from "./loadFrames.js";
+import {saveDrawing, restore, frameData} from "./loadFrames.js";
 import {getPosition, mouseDown, mouseUp, sketch, clear, penOn, eraseOn, rectOn, penCol, mouseClick, drawRect, circleOn} from "./draw.js";
 
 // initialize canvas variables
@@ -45,6 +45,10 @@ window.addEventListener('load', () => {
 col.onchange=penCol;
 penCol();
 
+function test() {
+    return frameData();
+}
+
 
 canvasSpace.addEventListener("click", mouseClick);
 rectBtn.addEventListener("click", rectOn);
@@ -54,3 +58,5 @@ eraserBtn.addEventListener("click", eraseOn);
 saveBtn.addEventListener("click", saveDrawing, false);
 clearBtn.addEventListener("click", clear, false);
 restoreBtn.addEventListener("click", restore, false);
+
+console.log(test())

@@ -165,7 +165,7 @@ function animateFrame(frameNumber){
 let draw = () => {
   animateFrame(animationFrameCount)
   animationFrameCount += 1;
-  if(animationFrameCount >= 5) animationFrameCount = 1;
+  if(animationFrameCount >= frames) animationFrameCount = 1;
 }
 
 let animateCanvas = () => {

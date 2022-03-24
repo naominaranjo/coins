@@ -43,4 +43,8 @@ let restore = function(i){
     ctx.putImageData(frames[i], 0, 0);
 }
 
-export { loadFrame, saveDrawing, restore};
+let frameData = function(){
+    return frames;
+}
+
+export { loadFrame, saveDrawing, restore, frameData};
