@@ -7,7 +7,8 @@ let width = canvas.width;
 let currFrame = 0;
 let loadedFrame = 0;
 let frames = {};
-
+let framesDataURL = [];
+let intervalID = 0;
 let frameSaves = document.getElementById("frameSaves");
 
 let loadFrame = () => {
@@ -319,17 +320,140 @@ function animateFrame(frameNumber) {
 }
 
 let draw = () => {
-
-    if (Object.keys(frames).length < 1) return; //breaks with condition
-    if (animationFrameCount > Object.keys(frames).length) animationFrameCount = 1;
+    if (Object.keys(frames).length < 1 || animationFrameCount > Object.keys(frames).length){
+        clearInterval(intervalID)
+        return; //breaks with condition
+    }
     animateFrame(animationFrameCount)
     animationFrameCount += 1;
 }
 
 let animateCanvas = () => {
-    setInterval(draw, 1000)
+    animationFrameCount = 1;
+    intervalID = setInterval(draw, 1000)
 
 }
+
+var script = document.createElement('script');
+script.src = 'https://code.jquery.com/jquery-3.4.1.min.js';
+script.type = 'text/javascript';
+document.getElementsByTagName('head')[0].appendChild(script);
+
+function convertObject(frame){
+    var frameConverted = jQuery.extend(frameConverted,frame)
+    return frameConverted;
+}
+
+function frame2JSON(frame){
+    convertedFrameRef = convertObject(frame);
+    return JSON.stringify(convertedFrameRef);
+}
+
+function convertFrameSet(frameSet){
+    frameSetDupe = frameSet;
+    for (let frameCount = 1; frameCount <= Object.keys(frameSetDupe).length; frameCount++){
+        frameSetDupe[frameCount] = convertObject(frameSetDupe[frameCount])
+    }
+
+    return frameSetDupe;
+
+}
+
+function frameSet2JSON(frameSet){
+    convertedFrameSetRef = convertFrameSet(frameSet);
+    return JSON.stringify(convertedFrameSetRef);
+}
+
+
+function arrayConversion(){
+    /*
+    Author: Jonathan Lurie - http://me.jonathanlurie.fr
+    License: MIT
+    
+    The point of this little gist is to fix the issue of losing
+    typed arrays when calling the default JSON serilization.
+    The default mode has for effect to convert typed arrays into
+    object like that: {0: 0.1, 1: 0.2, 2: 0.3} what used to be
+    Float32Array([0.1, 0.2, 0.3]) and once it takes the shape of an
+    object, there is no way to get it back in an automated way!
+    
+    The fix leverages the usually-forgotten functions that can be
+    called as arguments of JSON.stringify and JSON.parse: the
+    replacer and the reviver.
+*/
+
+    // get the glogal context for compatibility with node and browser
+    var context = typeof window === "undefined" ? global : window;
+
+    // flag that will be sliped in the json string
+    const FLAG_TYPED_ARRAY = "FLAG_TYPED_ARRAY";
+
+    // an object that contains a typed array, among other things
+    var obj = {
+        bli: "blibli",
+        bla: new Float32Array([10, 20, 30, 40]),
+        blou: {
+            blouFoo: 23,
+            blouFii: new Uint8Array([100, 200, 300, 400]),
+            blouFuu: "lklklkl"
+        }
+    }
+
+    console.log("---------------------");
+    console.log('The original object:');
+    console.log(obj);
+
+    // ENCODING ***************************************
+
+    var jsonStr = JSON.stringify(obj, function (key, value) {
+        // the replacer function is looking for some typed arrays.
+        // If found, it replaces it by a trio
+        if (value instanceof Int8Array ||
+            value instanceof Uint8Array ||
+            value instanceof Uint8ClampedArray ||
+            value instanceof Int16Array ||
+            value instanceof Uint16Array ||
+            value instanceof Int32Array ||
+            value instanceof Uint32Array ||
+            value instanceof Float32Array ||
+            value instanceof Float64Array) {
+            var replacement = {
+                constructor: value.constructor.name,
+                data: Array.apply([], value),
+                flag: FLAG_TYPED_ARRAY
+            }
+            return replacement;
+        }
+        return value;
+    });
+
+    console.log("---------------------");
+    console.log('The JSON string, look at this sneaky replacement!');
+    console.log(jsonStr);
+
+    // DECODING ***************************************
+
+
+    var decodedJson = JSON.parse(jsonStr, function (key, value) {
+        // the reviver function looks for the typed array flag
+        try {
+            if ("flag" in value && value.flag === FLAG_TYPED_ARRAY) {
+                // if found, we convert it back to a typed array
+                return new context[value.constructor](value.data);
+            }
+        } catch (e) { }
+
+        // if flag not found no conversion is done
+        return value;
+    });
+}
+
+function refresh(){
+    window.location.reload();
+}
+
+let animate = document.getElementById("animate");
+let clearCanvas = document.getElementById("refresh");
 
 
 canvasSpace.addEventListener("click", mouseClick);
@@ -340,5 +464,7 @@ eraserBtn.addEventListener("click", eraseOn);
 saveBtn.addEventListener("click", saveDrawing, false);
 clearBtn.addEventListener("click", clear, false);
 restoreBtn.addEventListener("click", restore, false);
+animate.addEventListener("click",animateCanvas,false);
+clearCanvas.addEventListener("click",refresh,false);
 
 console.log(test())
