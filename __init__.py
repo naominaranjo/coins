@@ -90,11 +90,9 @@ def logout():
         del session["username"]
     return redirect(url_for("index"))
 
-
-
-@app.route("/test")
+@app.route("/submissions")
 def test():
-    return render_template("test.html")
+    return render_template("submissions.html")
 
 @app.route("/load")
 def loadImages():
