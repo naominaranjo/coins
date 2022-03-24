@@ -14,6 +14,7 @@ def signed_in(session):
     return 'username' in session.keys() and session['username']
 
 @app.route("/", methods=["GET","POST"])
+@app.route("/index", methods=["GET","POST"])
 def index():
     if session.get('username') is not None:
         user = session['username']
