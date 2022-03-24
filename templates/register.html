@@ -14,7 +14,7 @@
 <body>
     <div class="top-bar">
         <div class="top-bar-left">
-            <ul class="dropdown menu" data-dropdown-menu>
+            <ul class="dropdown menu" data-dropdown-menu style="background-color:black">
                 <li class="menu-text">coins</li>
                 <li>
                     <a href="{{ url_for('index') }}">Home</a>
@@ -22,16 +22,16 @@
             </ul>
         </div>
         <div class="top-bar-right">
-            <ul class="dropdown menu" data-dropdown-menu>
+            <ul class="dropdown menu" data-dropdown-menu style="background-color:black">
                 <li><a href="{{ url_for('register') }}">Register</a></li>
                 <li><a href="{{ url_for('login') }}">Log In</a></li>
             </ul>
         </div>
     </div>
 
-    <div class="grid-x grid-padding-x">
+    <div class="grid-x grid-padding-x" style="margin-top:30px">
         <div class="cell text-center">
-            <h1>Register</h1>
+            <h1 class="text-primary">Register</h1>
         </div>
         <div class="cell">
             <form method="POST">
