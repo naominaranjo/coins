@@ -13,8 +13,7 @@ app.secret_key = urandom(32)
 def signed_in(session):
     return 'username' in session.keys() and session['username']
 
-@app.route("/", methods=["GET"])
-@app.route("/index", methods=["GET"])
+@app.route("/", methods=["GET","POST"])
 def index():
     if session.get('username') is not None:
         user = session['username']
