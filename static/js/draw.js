@@ -10,6 +10,7 @@ let eraserWidth;
 let erase = false;
 let initialize = false;
 let corner1 = true;
+let center = true;
 let rectDone = false;
 let data;
 let x1, x2, y1, y2;
@@ -55,16 +56,60 @@ function drawRect(event){
       getPosition(event);
       let a = coord.x;
       let b = coord.y;
-      console.log(b);
       ctx.rect(x1,y1,a-x1,b-y1);
       ctx.stroke();
-      console.log('animate');
+      // console.log('animate');
       // window.cancelAnimationFrame(requestID);
     }
 
 }
 
+function drawCircle(event){
+    if(mode == "circle" && !center){
+      clear();
+      ctx.putImageData(data, 0, 0);
+      ctx.beginPath();
+      getPosition(event);
+      let a = coord.x;
+      let b = coord.y;
+      let radius = Math.sqrt(Math.pow(a-x1,2) + Math.pow(b-y1,2));
+      ctx.arc(x1,y1,radius,0,2*Math.PI);
+      ctx.stroke();
+      // console.log('animate');
+      // window.cancelAnimationFrame(requestID);
+    }
+
+}
+
+
 function mouseClick(){
+  if (mode == "circle"){
+    ctx.beginPath();
+    ctx.lineWidth = penWidth;
+    ctx.lineCap = "round";
+    ctx.strokeStyle = color;
+    if (!center){
+      getPosition(event);
+      x2 = coord.x;
+      y2 = coord.y;
+      let radius = Math.sqrt(Math.pow(x2-x1,2) + Math.pow(y2-y1,2));
+      ctx.arc(x1,y1,radius,0,2*Math.PI);
+      ctx.stroke();
+      center = true;
+      return;
+    }
+    if (center){
+      getPosition(event);
+      x1 = coord.x;
+      y1 = coord.y;
+      center = false;
+      data = ctx.getImageData(0, 0, width, height);
+      // console.log("center");
+
+      return;
+    }
+
+}
     if (mode == "rect"){
       ctx.beginPath();
       ctx.lineWidth = penWidth;
@@ -77,7 +122,7 @@ function mouseClick(){
         ctx.rect(x1,y1,x2-x1,y2-y1);
         ctx.stroke();
         corner1 = true;
-        console.log("cor2");
+        // console.log("cor2");
         return;
       }
       if (corner1){
@@ -86,7 +131,7 @@ function mouseClick(){
         y1 = coord.y;
         corner1 = false;
         data = ctx.getImageData(0, 0, width, height);
-        console.log("cor1");
+        // console.log("cor1");
 
         return;
       }
@@ -132,6 +177,9 @@ function sketch(event) {
     if (mode == "rect"){
       drawRect(event);
     }
+    if (mode == "circle"){
+      drawCircle(event);
+    }
 
 }
 
@@ -139,39 +187,45 @@ function sketch(event) {
 
 // clears the canvas
 function clear(e) {
-    console.log("clear attempted");
+    // console.log("clear attempted");
     ctx.clearRect(0, 0, width, height);
 }
 
 function penOn(){
     mode = "paint";
     erase = false;
-    console.log("draw");
+    // console.log("draw");
 }
 
 function eraseOn(){
     mode = "erase";
     paint = false;
-    console.log("erase");
+    // console.log("erase");
 }
 
 function rectOn(){
     mode = "rect";
     requestID = window.requestAnimationFrame(drawRect);
 
-    console.log("rect")
+    // console.log("rect")
 }
 
+function circleOn(){
+    mode = "circle";
+    requestID = window.requestAnimationFrame(drawCircle);
+
+    // console.log("circle")
+}
 //changes the pen color according to user input
 function penCol(){
     // let as = document.forms[0].penColor.value;
     color = col.options[col.selectedIndex].text;
-    console.log(color);
+    // console.log(color);
 }
 
 penSlider.oninput = function() {
   penWidth = penSlider.value;
-  console.log(penWidth);
+  // console.log(penWidth);
 }
 
-export { getPosition, mouseDown, mouseUp, sketch, clear, penOn, eraseOn, rectOn, penCol, mouseClick, drawRect};
+export { getPosition, mouseDown, mouseUp, sketch, clear, penOn, eraseOn, rectOn, penCol, mouseClick, drawRect, circleOn};

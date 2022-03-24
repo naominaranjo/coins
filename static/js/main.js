@@ -1,5 +1,5 @@
 import {saveDrawing, restore} from "./loadFrames.js";
-import {getPosition, mouseDown, mouseUp, sketch, clear, penOn, eraseOn, rectOn, penCol, mouseClick, drawRect} from "./draw.js";
+import {getPosition, mouseDown, mouseUp, sketch, clear, penOn, eraseOn, rectOn, penCol, mouseClick, drawRect, circleOn} from "./draw.js";
 
 // initialize canvas variables
 const canvas = document.querySelector('#canvas');
@@ -23,9 +23,11 @@ let restoreBtn = document.getElementById("restore");
 let eraserBtn = document.getElementById("eraser");
 let penBtn = document.getElementById("pen");
 let rectBtn = document.getElementById("rect");
+let circleBtn = document.getElementById("circle");
 let col = document.getElementById("penColor");
 let penSlider = document.getElementById("penSize");
 let eraserSlider = document.getElementById("eraserSize");
+
 
 // Stores the initial position of the cursor
 let coord = { x: 0, y: 0 };
@@ -46,6 +48,7 @@ penCol();
 
 canvasSpace.addEventListener("click", mouseClick);
 rectBtn.addEventListener("click", rectOn);
+circleBtn.addEventListener("click", circleOn);
 penBtn.addEventListener("click", penOn);
 eraserBtn.addEventListener("click", eraseOn);
 saveBtn.addEventListener("click", saveDrawing, false);
