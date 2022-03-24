@@ -96,6 +96,10 @@ def logout():
 def test():
     return render_template("test.html")
 
+@app.route("/load")
+def loadImages():
+    return render_template("render.html")
+
 if __name__ == "__main__":  # true if this file NOT imported
     app.debug = True        # enable auto-reload upon code change
     app.run()

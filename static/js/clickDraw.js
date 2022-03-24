@@ -2,6 +2,7 @@ const canvas = document.querySelector('#canvas');
 
 // Context for the canvas for 2 dimensional operations
 const ctx = canvas.getContext('2d');
+let animationFrameCount = 1;
 
 let currFrame = 0;
 let frames = {};
@@ -11,6 +12,7 @@ let clearBtn = document.getElementById("clear");
 let restoreBtn = document.getElementById("restore");
 let eraserBtn = document.getElementById("eraser");
 let penBtn = document.getElementById("pen");
+let storeDataBtn = document.getElementById("store");
 let next = document.getElementById("next");
 let prev = document.getElementById("prev");
 let height = canvas.height;
@@ -47,6 +49,10 @@ function getPosition(event) {
   var rect = canvas.getBoundingClientRect();
   coord.x = event.clientX - rect.left;
   coord.y = event.clientY - rect.top;
+}
+
+function saveInfo(){
+  sessionStorage.setItem("frameData",JSON.stringify(frames));
 }
 
 function changeColor(){
@@ -149,6 +155,24 @@ function penCol(){
   color = col.options[col.selectedIndex].text;
   console.log(color);
 }
+
+function animateFrame(frameNumber){
+  ctx.clearRect(0, 0, width, height);
+  restore(frameNumber)
+
+}
+
+let draw = () => {
+  animateFrame(animationFrameCount)
+  animationFrameCount += 1;
+  if(animationFrameCount >= 5) animationFrameCount = 1;
+}
+
+let animateCanvas = () => {
+  setInterval(draw,1000)
+
+}
+
 col.onchange=penCol;
 penCol();
 
@@ -171,3 +195,4 @@ eraserBtn.addEventListener("click", eraseOn);
 saveBtn.addEventListener("click", saveDrawing, false);
 clearBtn.addEventListener("click", clear, false);
 restoreBtn.addEventListener("click", restore, false);
+storeDataBtn.addEventListener("click",saveInfo,false);
