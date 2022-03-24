@@ -1,5 +1,5 @@
 import {saveDrawing, restore} from "./loadFrames.js";
-import {getPosition, mouseDown, mouseUp, sketch, clear, penOn, eraseOn, rectOn, penCol, mouseClick} from "./draw.js";
+import {getPosition, mouseDown, mouseUp, sketch, clear, penOn, eraseOn, rectOn, penCol, mouseClick, drawRect, circleOn} from "./draw.js";
 
 // initialize canvas variables
 const canvas = document.querySelector('#canvas');
@@ -9,8 +9,6 @@ let width = canvas.width;
 
 // drawing variables
 let color;
-let penWidth;
-let eraserWidth;
 let erase = false;
 // This is the flag that we are going to use to
 // trigger drawing
@@ -25,9 +23,11 @@ let restoreBtn = document.getElementById("restore");
 let eraserBtn = document.getElementById("eraser");
 let penBtn = document.getElementById("pen");
 let rectBtn = document.getElementById("rect");
+let circleBtn = document.getElementById("circle");
 let col = document.getElementById("penColor");
 let penSlider = document.getElementById("penSize");
 let eraserSlider = document.getElementById("eraserSize");
+
 
 // Stores the initial position of the cursor
 let coord = { x: 0, y: 0 };
@@ -45,21 +45,10 @@ window.addEventListener('load', () => {
 col.onchange=penCol;
 penCol();
 
-//changes pen thickness according to user input
-// output.innerHTML = slider.value; // Display the default slider value
-// Update the current slider value (each time you drag the slider handle) + change pen thickness
-penSlider.oninput = function() {
-  penWidth = penSlider.value;
-  console.log(penWidth);
-}
-
-eraserSlider.oninput = function() {
-  eraserWidth = eraserSlider.value;
-  console.log(eraserWidth);
-}
 
 canvasSpace.addEventListener("click", mouseClick);
 rectBtn.addEventListener("click", rectOn);
+circleBtn.addEventListener("click", circleOn);
 penBtn.addEventListener("click", penOn);
 eraserBtn.addEventListener("click", eraseOn);
 saveBtn.addEventListener("click", saveDrawing, false);
