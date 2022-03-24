@@ -37,7 +37,7 @@
         </div>
     </div>
 
-    <div class="container text-center" style=" margin-top: 10%; margin-left: 10%; margin-right: 10%; background-color: rgb(103, 206, 0);">
+    <div class="container text-center" style=" margin-top: 10%; margin-left: 10%; margin-right: 10%; background-color: rgb(0, 192, 206);">
 
         <div class="col-lg-12 text-align-left">
             <h1>Welcome to Coins!</h1>
@@ -45,6 +45,14 @@
         </div>
 
         <div class="btn-container"> 
+            {%if user %}
+            <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+             {%else%}
+            <a href="{{ url_for('register') }}" id="register" type="button" class="btn cool-btn">Register</a>
+            <a href="{{ url_for('login') }}" id="login" type="button" class="btn cool-btn">Login</a>
+            <!-- <a href="{{ url_for('login') }}">Log In</a> -->
+            {%endif%}
+            
 
             <!-- <ul class="dropdown menu" data-dropdown-menu>
                 {%if user %}
