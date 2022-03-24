@@ -48,6 +48,11 @@ class Table:
         self.c.execute(f"SELECT {field} FROM {self.table_name} WHERE {self.search_field} = ?", [search])
         return self.c.fetchone()
     
+    def get_search_list(self, search, field, search_f):
+        self.c.execute(f"SELECT {field} FROM {self.table_name} WHERE {search_f} = ?", [search])
+        list = self.c.fetchall()
+        return map(first, list)
+    
     def get_value(self, search, field):
         "returns the value of field for the row where search_field equals search"
         value_list = self.get_value_list(search, field)

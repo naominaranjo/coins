@@ -76,6 +76,9 @@ def match_book_owner(username,bookID):
 def match_book_owner_by_title(username,title):
     return match_book_owner(username,get_bookID_by_title(title))
 
+def get_books_by_username(userID):
+    return flip_book.get_search_list(userID, "bookTitle", "userID")
+
 
 def get_bookID_by_title(title):
     return flip_book.get_non_main_value("bookTitle",title,"bookID")[0]

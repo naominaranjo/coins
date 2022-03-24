@@ -29,7 +29,19 @@ def beep():
     return render_template("beep.html")
 
 
-# @app.route("/history")
+# @app.route("/profile", methods=["GET"])
+# def profile():
+#     if "username" not in session:
+#         return redirect(url_for("index"))
+
+#     username = session['username']
+#     user_id = getIDbyUsername(username)
+
+#     # GET request: display the form
+#     if request.method == "GET":
+#         searches = db.get_user_searches(user_id)
+
+#         return render_template("profile.html", searches=searches)
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
