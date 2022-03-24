@@ -8,8 +8,8 @@ canvas {
 }
 
 body{
-    background-color: white
-    /* background-color: rgb(0, 192, 206) */
+
+    background-color: rgb(0, 192, 206)
 }
 .rounded{
     border-radius: 4px;
