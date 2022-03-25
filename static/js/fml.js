@@ -424,6 +424,10 @@ function postPayload(title,frameJSON, user){
     }));
 }
 
+function sendAnimation(title,user){
+    postPayload(title,export2JSON(),user)
+}
+
 function refresh(){
     window.location.reload();
 }
