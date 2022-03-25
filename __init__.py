@@ -13,17 +13,35 @@ app.secret_key = urandom(32)
 def signed_in(session):
     return 'username' in session.keys() and session['username']
 
-@app.route("/", methods=["GET"])
-@app.route("/index", methods=["GET"])
+@app.route("/", methods=["GET","POST"])
+@app.route("/index", methods=["GET","POST"])
 def index():
     if session.get('username') is not None:
         user = session['username']
-        return render_template("beep.html", user=user)
+        return render_template("profile.html", user=user)
 
     else:
 
-        return render_template("beep.html")
+        return render_template("homepage.html")
 
+@app.route("/beep", methods = ["GET","POST"])
+def beep():
+    return render_template("beep.html")
+
+
+# @app.route("/profile", methods=["GET"])
+# def profile():
+#     if "username" not in session:
+#         return redirect(url_for("index"))
+
+#     username = session['username']
+#     user_id = getIDbyUsername(username)
+
+#     # GET request: display the form
+#     if request.method == "GET":
+#         searches = db.get_user_searches(user_id)
+
+#         return render_template("profile.html", searches=searches)
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -93,6 +111,10 @@ def logout():
 @app.route("/submissions")
 def test():
     return render_template("submissions.html")
+
+@app.route("/load")
+def loadImages():
+    return render_template("render.html")
 
 if __name__ == "__main__":  # true if this file NOT imported
     app.debug = True        # enable auto-reload upon code change
