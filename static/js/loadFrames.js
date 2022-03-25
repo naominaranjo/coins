@@ -25,7 +25,7 @@ function saveDrawing(e) {
     // reference.width = 50;
     // reference.height = 50;
     // let refCtx = reference.getContext("2d");
-    // refCtx.putImageData(data, 0, 0);
+    // refCtx.putImageData(data, 0, 0, 0, 0, 50, 50);
     frames[currFrame] = data;
     console.log(frames);
     const i = currFrame;
