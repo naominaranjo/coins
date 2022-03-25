@@ -8,6 +8,8 @@
       <link rel="stylesheet" href="static/css/beeps.css" />
   </head>
   <body>
+    <h1>Welcome user</h1>
+    <h1 id="username">{{user}}</h1>
     <div class="grid-container" style="margin-top: 25px;">
 
       <div class="grid-x grid-padding-x">
@@ -40,13 +42,16 @@
   
           <div class="btn-group float-left">
             <div><button class="button rounded" id="save">Save Drawing</button></div>
-            <div><button class="button rounded" id="store">Store Drawings</button></div>
             <div><button class="button rounded" id="clear" style="background-color: red;">Clear Drawing</button></div>
           </div>
   
           <div class="btn-group float-left">
             <div><button class="button rounded" id="animate">Animate</button></div>
             <div><button class="button rounded" id="refresh" style="background-color: red;">Restart</button></div>
+          </div>
+          <div class="btn-group float-left">
+            <textarea id="animationTitle" rows="1" cols="10">Title your animation here!</textarea>
+            <div><button class="button rounded" id="publish">Publish Your Animation!</button></div>
           </div>
 
           <div class="btn-group float-left">

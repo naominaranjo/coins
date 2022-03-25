@@ -26,7 +26,10 @@ def index():
 
 @app.route("/beep", methods = ["GET","POST"])
 def beep():
-    return render_template("beep.html")
+    if session.get('username') is None:
+        return render_template("beep.html", user = "Guest")
+    else:
+        return render_template("beep.html", user=session.get('username'))
 
 
 # @app.route("/profile", methods=["GET"])
@@ -110,7 +113,21 @@ def logout():
 
 @app.route("/submissions")
 def test():
-    return render_template("submissions.html")
+    book_ids = getBookIDs()
+    print(book_ids)
+    book_dictionary = []
+
+    for id in book_ids:
+        print("id",id)
+        title = getBookNameByID(id)
+        print("title",title)
+        author = getBookAuthorByID(id)
+        print("author",author)
+
+        book_dictionary.append({"title":title,"author":author,"id":id})
+
+    print(book_dictionary)
+    return render_template("submissions.html",book_dictionary=book_dictionary)
 
 @app.route("/load/<id>")
 def loadImages(id):

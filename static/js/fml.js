@@ -430,14 +430,24 @@ function sendAnimation(title,user){
     postPayload(title,export2JSON(),user)
 }
 
+function sendAnimationAuto(){
+    let text = document.getElementById("animationTitle");
+    let title = text.innerText;
+    let username = document.getElementById("username");
+    username = username.innerText;
+    sendAnimation(title,username)
+    alert("Published!")
+}
+
 function refresh(){
     window.location.reload();
 }
 
 let animate = document.getElementById("animate");
 let clearCanvas = document.getElementById("refresh");
+let publish = document.getElementById("publish");
 
-
+publish.addEventListener('click',sendAnimationAuto);    
 canvasSpace.addEventListener("click", mouseClick);
 rectBtn.addEventListener("click", rectOn);
 circleBtn.addEventListener("click", circleOn);

@@ -5,6 +5,12 @@
     </head>
     <body>
         <h1>User Submissions</h1>
-        <script src="static/js/load_submissions.js"></script>
+        <ul>
+            {% for book in book_dictionary %}
+            <li>
+                <a href = "/load/{{book['id']}}">"{{book['title']}}"</a>
+            </li>
+            {% endfor %}
+        </ul>
     </body>
 </html>
