@@ -328,9 +328,11 @@ let draw = () => {
     animationFrameCount += 1;
 }
 
+
+
 let animateCanvas = () => {
     animationFrameCount = 1;
-    intervalID = setInterval(draw, 1000)
+    intervalID = setInterval(draw, 300)
 
 }
 

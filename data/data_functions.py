@@ -53,6 +53,9 @@ def getBookIDs():
 def getBookNameByID(bookID):
     return flip_book.get_value(bookID, "bookTitle")
 
+def getBookAuthorByID(bookID):
+    return getUsernameByID(flip_book.get_value(bookID,"userID"))
+
 def getBook(bookID):
     return flip_book.get_value_list(bookID,"bookTitle")
 
@@ -70,6 +73,9 @@ def add_book(title,image_collection,username):
         x = randint(0, 1000)
 
 
+    if(bookTitle_exists(title)):
+        return False
+    
     flip_book.add_values([x, title, image_collection, username])
     set_book_drawings_byID(x,image_collection)
 

@@ -1,29 +1,39 @@
 <!DOCTYPE html>
-<htmnl lang='en'>
+<html lang="en">
+  <head>
+      <style>
 
-    <head>
-        <meta charset='utf-8'>
-        <title>basic JS canvas work</title>
-    </head>
+      </style>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.7.4/dist/css/foundation.min.css" crossorigin="anonymous">
+      <link rel="stylesheet" href="static/css/beeps.css" />
+  </head>
+  <body>
 
-    <style>
-        #slate {
-            border: 1px solid black
-        }
-    </style>
+      <div class="large-6 cell">
+        <div><canvas id="canvas" width="600" height="600"></canvas></div>
+      </div>
 
-    <h1>1 0 1 0</h1>
 
-    <h2>BEEP BOOP</h2>
-
-    <div>
-        <canvas height="600" width="600" id="canvas">
-            BEEP BOOP ALT TEXT BEEP
-        </canvas>
-    </div>
-    <div>
-        <button class="button" id="getFrames">getFrames</button>
+        <div class="tools float-right" style="margin-right:20%">
+          <div><button class="button rounded" id="animate">Animate</button></div>
+        </div>
+      </div>
     </div>
 
-    <script src="static/js/render.js"></script>
-</htmnl>
+
+    <div class="grid-x grid-padding-x">
+      <div id="frameSaves"></div>
+    
+    
+    <script  src="/static/js/render_version_fml.js" type="text/javascript"></script>
+    <script>
+      let m = "{{images}}"
+      m = m.replace(/&#34;/g,'"')
+      console.log(m)
+      x = loadJSONPayload(m);
+      animateCanvas()
+    </script>
+    </div>
+
+  </body>
+</html>

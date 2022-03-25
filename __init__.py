@@ -4,7 +4,7 @@ import json
 from os import urandom
 from data.data_functions import *
 
-reset_data()
+#reset_data()
 
 app = Flask(__name__)
 debug = True
@@ -112,18 +112,27 @@ def logout():
 def test():
     return render_template("submissions.html")
 
-@app.route("/load")
-def loadImages():
-    return render_template("render.html")
+@app.route("/load/<id>")
+def loadImages(id):
+    if(not bookID_exists(id)):
+        return "problem"
+    title = getBookNameByID(id)
+    author = getBookAuthorByID(id)
+    images = get_book_drawings(title)
+    print(images)
+    return render_template("render.html",
+    title=title, author=author,images=images)
 
 @app.route("/upload", methods = ['POST'])
 def upload():
     payload = request.get_json()
     title = payload["title"]
-    user = payload["user"]
+    user = getIDbyUsername(payload["user"])
     book = payload["animation"]
     add_book(title,book,user)
-    
+    print(user)
+    print(get_bookID_by_title(title))
+
     # print(title)
     # print(user)
     # print(book)
