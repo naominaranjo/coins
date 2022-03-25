@@ -8,55 +8,55 @@
       <link rel="stylesheet" href="static/css/beeps.css" />
   </head>
   <body>
-
-      <div class="large-6 cell">
-        <div><canvas id="canvas" width="600" height="600"></canvas></div>
-      </div>
-
-
-        <div class="tools float-right" style="margin-right:20%">
-          <div class="slidecontainer">
-            <input type="range" min="1" max="10" value="5" class="slider" id="penSize">
+    <div class="grid-container" style="margin-top: 25px;">
+      <div class="grid-x grid-padding-x">
+        <div class="large-6 cell">
+          <div><canvas id="canvas" width="600" height="600"></canvas></div>
+        </div>
+        <div class="large-1 cell"></div>
+        <div class="large-5 cell float-right">
+          <div class="btn-group float-left">
+            <div><button class="button rounded" id="pen"> Pen </button>
+            <div><button class="button rounded" id="eraser"> Eraser </button>
+            <div><button class="button rounded" id="rect"> Rectangle </button>
+            <div><button class="button rounded" id="circle"> Circle </button>
+            <form>
+              <select id="penColor" style="width:max-content;">
+                <option value="1" selected="selected">black</option>
+                <option value="2">red</option>
+                <option value="3">orange</option>
+                <option value="4">yellow</option>
+                <option value="5">green</option>
+                <option value="6">blue</option>
+                <option value="7">indigo</option>
+              </select>
+            </form>
+            <div><input type="range" min="1" max="10" value="5" class="slider" id="penSize"></div>
           </div>
-
-          <form class="float-right">
-            <select id="penColor">
-              <option value="1" selected="selected">black</option>
-              <option value="2">red</option>
-              <option value="3">orange</option>
-              <option value="4">yellow</option>
-              <option value="5">green</option>
-              <option value="6">blue</option>
-              <option value="7">indigo</option>
-            </select>
-          </form>
-
-          <div><button class="button rounded" id="pen"> Pen </button>
-
-          <div><button class="button rounded" id="eraser"> Eraser </button>
-          <div><button class="button rounded" id="rect"> Rectangle </button>
-          <div><button class="button rounded" id="circle"> Circle </button>
-
-          <div><button class="button rounded" id="clear">Clear Drawing</button></div>
-          <div><button class="button rounded" id="save">Save Drawing</button></div>
-          <div><button class="button rounded" id="restore">Restore Drawing</button></div>
-          <div><button class="button rounded" id="store">Store Drawings</button></div>
-          <div><button class="button rounded" id="animate">Animate</button></div>
-          <div><button class="button rounded" id="refresh">Restart</button></div>
-
-
-
-          <div>
-            <button class="button rounded" id="prev" style="font-size: 25px;">-></button>
-            <button class="button rounded" id="next" style="font-size: 25px;"><-</button>
+  
+          <div class="btn-group float-left">
+            <div><button class="button rounded" id="clear">Clear Drawing</button></div>
+            <div><button class="button rounded" id="save">Save Drawing</button></div>
+            <div><button class="button rounded" id="store">Store Drawings</button></div>
+          </div>
+  
+          <div class="button-group float-left">
+            <div><button class="button rounded" id="animate">Animate</button></div>
+            <div><button class="button rounded" id="refresh">Restart</button></div>
           </div>
         </div>
+
       </div>
     </div>
+ 
+
+    
+    
 
 
     <div class="grid-x grid-padding-x">
-      <div id="frameSaves"></div>
+    <div id="frameSaves"></div>
+
     <script  src="/static/js/fml.js" type="text/javascript"></script>
     </div>
 
