@@ -9,11 +9,15 @@
   </head>
   <body>
     <div class="grid-container" style="margin-top: 25px;">
+
       <div class="grid-x grid-padding-x">
+
         <div class="large-6 cell">
           <div><canvas id="canvas" width="600" height="600"></canvas></div>
         </div>
+
         <div class="large-1 cell"></div>
+
         <div class="large-5 cell float-right">
           <div class="btn-group float-left">
             <div><button class="button rounded" id="pen"> Pen </button>
@@ -35,30 +39,28 @@
           </div>
   
           <div class="btn-group float-left">
-            <div><button class="button rounded" id="clear">Clear Drawing</button></div>
             <div><button class="button rounded" id="save">Save Drawing</button></div>
             <div><button class="button rounded" id="store">Store Drawings</button></div>
+            <div><button class="button rounded" id="clear" style="background-color: red;">Clear Drawing</button></div>
           </div>
   
-          <div class="button-group float-left">
+          <div class="btn-group float-left">
             <div><button class="button rounded" id="animate">Animate</button></div>
-            <div><button class="button rounded" id="refresh">Restart</button></div>
+            <div><button class="button rounded" id="refresh" style="background-color: red;">Restart</button></div>
           </div>
+
+          <div class="btn-group float-left">
+            <div id="frameSaves" style="width:100%;"></div>
+          </div>
+
         </div>
 
       </div>
+
     </div>
- 
-
     
     
-
-
-    <div class="grid-x grid-padding-x">
-    <div id="frameSaves"></div>
 
     <script  src="/static/js/fml.js" type="text/javascript"></script>
-    </div>
-
   </body>
 </html>
