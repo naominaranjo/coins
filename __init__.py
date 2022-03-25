@@ -116,6 +116,19 @@ def test():
 def loadImages():
     return render_template("render.html")
 
+@app.route("/upload", methods = ['POST'])
+def upload():
+    payload = request.get_json()
+    title = payload["title"]
+    user = payload["user"]
+    book = payload["animation"]
+    add_book(title,book,user)
+    
+    # print(title)
+    # print(user)
+    # print(book)
+    return ""
+
 if __name__ == "__main__":  # true if this file NOT imported
     app.debug = True        # enable auto-reload upon code change
     app.run()
