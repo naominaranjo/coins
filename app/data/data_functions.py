@@ -30,8 +30,11 @@ def getIDbyUsername(username):
 
 def correct_password(username, password):
     "returns true if username matches password"
-    real_password = users.get_value(getIDbyUsername(username), "password")
-    return password == real_password
+    try:
+        real_password = users.get_value(getIDbyUsername(username), "password")
+        return password == real_password
+    except:
+        return False
 
 def add_user(username, password):
     "adds a user with username and passsowrd"

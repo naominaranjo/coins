@@ -292,6 +292,10 @@ let circleBtn = document.getElementById("circle");
 let eraserSlider = document.getElementById("eraserSize");
 
 
+let animateBtn = document.getElementById("animate");
+let clearCanvas = document.getElementById("refresh");
+let publish = document.getElementById("publish");
+
 // Stores the initial position of the cursor
 
 // wait for the content of the window element
@@ -332,7 +336,7 @@ let draw = () => {
 
 let animateCanvas = () => {
     animationFrameCount = 1;
-    intervalID = setInterval(draw, 300)
+    intervalID = setInterval(draw, 500)
 
 }
 
@@ -432,7 +436,7 @@ function sendAnimation(title,user){
 
 function sendAnimationAuto(){
     let text = document.getElementById("animationTitle");
-    let title = text.innerText;
+    let title = text.value;
     let username = document.getElementById("username");
     username = username.innerText;
     sendAnimation(title,username)
@@ -443,9 +447,12 @@ function refresh(){
     window.location.reload();
 }
 
-let animate = document.getElementById("animate");
-let clearCanvas = document.getElementById("refresh");
-let publish = document.getElementById("publish");
+function logSomething(){
+    console.log("Something has been logged.");
+}
+
+animateBtn.addEventListener("click", animateCanvas, false);
+clearCanvas.addEventListener("click", refresh, false);
 
 publish.addEventListener('click',sendAnimationAuto);    
 canvasSpace.addEventListener("click", mouseClick);
@@ -455,8 +462,6 @@ penBtn.addEventListener("click", penOn);
 eraserBtn.addEventListener("click", eraseOn);
 saveBtn.addEventListener("click", saveDrawing, false);
 clearBtn.addEventListener("click", clear, false);
-restoreBtn.addEventListener("click", restore, false);
-animate.addEventListener("click",animateCanvas,false);
-clearCanvas.addEventListener("click",refresh,false);
+//restoreBtn.addEventListener("click", restore, false);
 
 console.log(test())
