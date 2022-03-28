@@ -4,7 +4,7 @@ import json
 from os import urandom
 from data.data_functions import *
 
-#reset_data()
+reset_data()
 
 app = Flask(__name__)
 debug = True
@@ -28,9 +28,11 @@ def index():
 def beep():
     if session.get('username') is None:
         return render_template("beep.html", user = "Guest")
-    else:
+    if request.method == "GET":
         return render_template("beep.html", user=session.get('username'))
-
+    
+    created_title = request.form.get("animationTitle", default="")
+    add_book()
 
 # @app.route("/profile", methods=["GET"])
 # def profile():
@@ -101,6 +103,7 @@ def login():
         if error:
             session['username'] = username
             return redirect(url_for("index"))
+        
         else:
             error = "Incorrect Password"
             return render_template('login.html', error=error)
@@ -157,5 +160,5 @@ def upload():
 
 if __name__ == "__main__":  # true if this file NOT imported
     app.debug = True        # enable auto-reload upon code change
-    app.run()
+    app.run(host='0.0.0.0')
 
