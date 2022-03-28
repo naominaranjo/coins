@@ -65,3 +65,7 @@ ShriyaA -- 2022-3-23
 IshraqM —- 2022-3-24 2:00
 - Finished animation function
 - Saving works seems unviable with time constraints
+
+IshraqM -- 2022-3-25 2:00
+- Finished up work with saving to db
+- Accessable through user submissions and postable
