@@ -18,12 +18,13 @@ let step = -1;
 function pushHistory() {
     step++;
     history.push(canvas.toDataURL());
-    console.log("pushed");
+    console.log("pushed " + step);
 }
 
 function undo() {
     if (step > 0) {
         step--;
+        console.log("after -- is " + step);
         var img = new Image();
         img.src = history[step];
         ctx.clearRect(0, 0, width, height);
