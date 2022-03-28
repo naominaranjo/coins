@@ -11,6 +11,41 @@ let framesDataURL = [];
 let intervalID = 0;
 let frameSaves = document.getElementById("frameSaves");
 
+// keeps track of drawing history
+let history = new Array();
+let step = -1;
+
+function pushHistory() {
+    step++;
+    if (step < history.length) {history.length = step;}
+    history.push(canvas.toDataURL());
+    console.log("pushed");
+}
+
+function undo() {
+    if (step > 0) {
+        step--;
+        var img = new Image();
+        img.src = history[step];
+        img.onload = function () {
+            ctx.drawImage(img, 0, 0);
+        }
+        console.log(step);
+        console.log(history);
+    }
+}
+
+function redo() {
+    if (step < history.length - 1) {
+        step++;
+        var img = new Image();
+        img.src = history[step];
+        img.onload = function () {
+            ctx.drawImage(img, 0, 0);
+        }
+    }
+}
+
 let loadFrame = () => {
     console.log("import successful");
 }
@@ -35,6 +70,7 @@ function saveDrawing(e) {
         restore(i);
     });
     frameSaves.appendChild(reference);
+    history = new Array();
 }
 
 // restores the drawing using putImageData()
@@ -103,6 +139,7 @@ function drawRect(event) {
         let b = coord.y;
         ctx.rect(x1, y1, a - x1, b - y1);
         ctx.stroke();
+        pushHistory();
         // console.log('animate');
         // window.cancelAnimationFrame(requestID);
     }
@@ -120,6 +157,7 @@ function drawCircle(event) {
         let radius = Math.sqrt(Math.pow(a - x1, 2) + Math.pow(b - y1, 2));
         ctx.arc(x1, y1, radius, 0, 2 * Math.PI);
         ctx.stroke();
+        pushHistory();
         // console.log('animate');
         // window.cancelAnimationFrame(requestID);
     }
@@ -284,12 +322,13 @@ penSlider.oninput = function () {
 let canvasSpace = document.getElementById("canvas");
 let saveBtn = document.getElementById("save");
 let clearBtn = document.getElementById("clear");
-let restoreBtn = document.getElementById("restore");
 let eraserBtn = document.getElementById("eraser");
 let penBtn = document.getElementById("pen");
 let rectBtn = document.getElementById("rect");
 let circleBtn = document.getElementById("circle");
 let eraserSlider = document.getElementById("eraserSize");
+let undoBtn = document.getElementById("undo");
+let redoBtn = document.getElementById("redo");
 
 
 // Stores the initial position of the cursor
@@ -430,6 +469,7 @@ function sendAnimation(title,user){
 
 function refresh(){
     window.location.reload();
+    history = new Array();
 }
 
 let animate = document.getElementById("animate");
@@ -443,8 +483,9 @@ penBtn.addEventListener("click", penOn);
 eraserBtn.addEventListener("click", eraseOn);
 saveBtn.addEventListener("click", saveDrawing, false);
 clearBtn.addEventListener("click", clear, false);
-restoreBtn.addEventListener("click", restore, false);
 animate.addEventListener("click",animateCanvas,false);
 clearCanvas.addEventListener("click",refresh,false);
+undoBtn.addEventListener("click",undo,false);
+redoBtn.addEventListener("click",redo,false);
 
 console.log(test())
