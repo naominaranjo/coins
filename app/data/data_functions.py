@@ -1,7 +1,7 @@
 from sqlite3 import connect
 from data.table import Table
 from random import *
-data = connect("data.db", isolation_level = None, check_same_thread=False)
+data = connect("tmp/data.db", isolation_level = None, check_same_thread=False)
 
 users = Table(data, "users", "userID")
 flip_book = Table(data,"flipbooks","bookID")
@@ -108,6 +108,6 @@ def set_book_drawings_byTitle(title,image_json):
 
 def reset_data():
     "resets the database to empty user and story tables"
-    open("data.db", "w").close()
+    open("tmp/data.db", "w").close()
     users.create(["userID", "username", "password" ])
     flip_book.create(["bookID", "bookTitle", "images", "userID"])

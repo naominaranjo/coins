@@ -1,10 +1,12 @@
+import sys
+sys.path.append("/var/www/coins/app")
 from flask import request, render_template, Flask, redirect, session, url_for
 import urllib.request
 import json
 from os import urandom
 from data.data_functions import *
 
-#reset_data()
+reset_data()
 
 app = Flask(__name__)
 debug = True
@@ -157,5 +159,5 @@ def upload():
 
 if __name__ == "__main__":  # true if this file NOT imported
     app.debug = True        # enable auto-reload upon code change
-    app.run()
+    app.run(host='0.0.0.0')
 
