@@ -100,6 +100,12 @@ def login():
         username = request.form.get("name", default="")
         password = request.form.get("password", default="")
 
+        error = user_exists(username)
+
+        if error == False:
+            error = "Username does not exist"
+            return render_template('login.html', error=error)
+
         error = correct_password(username, password)
         
         if error:
@@ -118,6 +124,7 @@ def logout():
 
 @app.route("/submissions")
 def test():
+    user = session['username']
     book_ids = getBookIDs()
     print(book_ids)
     book_dictionary = []
@@ -132,7 +139,7 @@ def test():
         book_dictionary.append({"title":title,"author":author,"id":id})
 
     print(book_dictionary)
-    return render_template("submissions.html",book_dictionary=book_dictionary)
+    return render_template("submissions.html",book_dictionary=book_dictionary, user=user)
 
 @app.route("/load/<id>")
 def loadImages(id):
