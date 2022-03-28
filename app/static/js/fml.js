@@ -113,7 +113,6 @@ function getPosition(event) {
 // The following functions toggle the flag to start
 // and stop drawing
 function mouseDown(event) {
-    pushHistory();
     if (mode == "paint") {
         paint = true;
         getPosition(event);
@@ -339,6 +338,7 @@ let publish = document.getElementById("publish");
 // to load, then performs the operations.
 window.addEventListener('load', () => {
 
+    pushHistory();
     canvas.addEventListener('mousedown', mouseDown);
     canvas.addEventListener('mouseup', mouseUp);
     canvas.addEventListener('mousemove', sketch);
