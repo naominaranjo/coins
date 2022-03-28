@@ -290,6 +290,7 @@ let penBtn = document.getElementById("pen");
 let rectBtn = document.getElementById("rect");
 let circleBtn = document.getElementById("circle");
 let eraserSlider = document.getElementById("eraserSize");
+let animateBtn = document.getElementById("animate");
 
 
 // Stores the initial position of the cursor
@@ -311,13 +312,13 @@ let animationFrameCount = 1;
 
 function test() {
     return frameData();
-}
+};
 
 function animateFrame(frameNumber) {
     ctx.clearRect(0, 0, width, height);
     restore(frameNumber)
 
-}
+};
 
 let draw = () => {
     if (Object.keys(frames).length < 1 || animationFrameCount > Object.keys(frames).length){
@@ -326,15 +327,16 @@ let draw = () => {
     }
     animateFrame(animationFrameCount)
     animationFrameCount += 1;
-}
+};
 
 
 
-let animateCanvas = () => {
+function animateCanvas() {
+    console.log("buttonworks");
     animationFrameCount = 1;
-    intervalID = setInterval(draw, 300)
+    intervalID = setInterval(draw, 300);
 
-}
+};
 
 var script = document.createElement('script');
 script.src = 'https://code.jquery.com/jquery-3.4.1.min.js';
@@ -443,20 +445,22 @@ function refresh(){
     window.location.reload();
 }
 
-let animate = document.getElementById("animate");
 let clearCanvas = document.getElementById("refresh");
 let publish = document.getElementById("publish");
 
-publish.addEventListener('click',sendAnimationAuto);    
+publish.addEventListener('click',sendAnimationAuto);
 canvasSpace.addEventListener("click", mouseClick);
 rectBtn.addEventListener("click", rectOn);
+
 circleBtn.addEventListener("click", circleOn);
 penBtn.addEventListener("click", penOn);
 eraserBtn.addEventListener("click", eraseOn);
+
 saveBtn.addEventListener("click", saveDrawing, false);
+
 clearBtn.addEventListener("click", clear, false);
-restoreBtn.addEventListener("click", restore, false);
-animate.addEventListener("click",animateCanvas,false);
+animateBtn.addEventListener("click", animateCanvas);
+
 clearCanvas.addEventListener("click",refresh,false);
 
 console.log(test())
