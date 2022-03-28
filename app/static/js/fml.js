@@ -12,12 +12,11 @@ let intervalID = 0;
 let frameSaves = document.getElementById("frameSaves");
 
 // keeps track of drawing history
-let history = new Array();
+let history = [];
 let step = -1;
 
 function pushHistory() {
     step++;
-    if (step < history.length) {history.length = step;}
     history.push(canvas.toDataURL());
     console.log("pushed");
 }
@@ -27,11 +26,9 @@ function undo() {
         step--;
         var img = new Image();
         img.src = history[step];
-        img.onload = function () {
-            ctx.drawImage(img, 0, 0);
-        }
+        ctx.clearRect(0, 0, width, height);
+        ctx.drawImage(img, 0, 0);
         console.log(step);
-        console.log(history);
     }
 }
 
@@ -40,9 +37,9 @@ function redo() {
         step++;
         var img = new Image();
         img.src = history[step];
-        img.onload = function () {
-            ctx.drawImage(img, 0, 0);
-        }
+        ctx.clearRect(0, 0, width, height);
+        ctx.drawImage(img, 0, 0);
+        console.log(step);
     }
 }
 
@@ -116,6 +113,7 @@ function getPosition(event) {
 // The following functions toggle the flag to start
 // and stop drawing
 function mouseDown(event) {
+    pushHistory();
     if (mode == "paint") {
         paint = true;
         getPosition(event);
@@ -139,7 +137,6 @@ function drawRect(event) {
         let b = coord.y;
         ctx.rect(x1, y1, a - x1, b - y1);
         ctx.stroke();
-        pushHistory();
         // console.log('animate');
         // window.cancelAnimationFrame(requestID);
     }
@@ -157,7 +154,6 @@ function drawCircle(event) {
         let radius = Math.sqrt(Math.pow(a - x1, 2) + Math.pow(b - y1, 2));
         ctx.arc(x1, y1, radius, 0, 2 * Math.PI);
         ctx.stroke();
-        pushHistory();
         // console.log('animate');
         // window.cancelAnimationFrame(requestID);
     }
@@ -223,6 +219,7 @@ function mouseClick() {
 }
 
 function mouseUp() {
+    pushHistory();
     erase = false;
     paint = false;
 }
@@ -246,7 +243,7 @@ function sketch(event) {
         // coordinate to this coordinate
         ctx.lineTo(coord.x, coord.y);
         // Draws the line.
-        ctx.stroke();
+        ctx.stroke();  
     }
     if (erase) {
         ctx.lineWidth = penWidth;
@@ -256,6 +253,7 @@ function sketch(event) {
         getPosition(event);
         ctx.lineTo(coord.x, coord.y);
         ctx.stroke();
+       
     }
     if (mode == "rect") {
         drawRect(event);
@@ -341,9 +339,9 @@ let publish = document.getElementById("publish");
 // to load, then performs the operations.
 window.addEventListener('load', () => {
 
-    document.addEventListener('mousedown', mouseDown);
-    document.addEventListener('mouseup', mouseUp);
-    document.addEventListener('mousemove', sketch);
+    canvas.addEventListener('mousedown', mouseDown);
+    canvas.addEventListener('mouseup', mouseUp);
+    canvas.addEventListener('mousemove', sketch);
 
 });
 
